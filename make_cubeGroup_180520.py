@@ -1,27 +1,43 @@
+import numpy as np
+import sys
+
 import STLWriter as STLWR
 # STLWriter
 # code from
 # http://code.activestate.com/recipes/578246/
 # by Manfred Moitzi
+# (renamed as STLWriter.py from recipe-578246-1.py)
+
+#
 
 '''
 v0.1 May, 20, 2018
+  - read dipole positions from [IN_FILE]
+  - add python_list_add()
   - get_cube() takes [size] arg
   - add make_cubeGroup()
 '''
 
+
+def python_list_add(in1, in2):
+    wrk = np.array(in1) + np.array(in2)
+    return wrk.tolist()
+
+
 def make_cubeGroup():
-    def get_cube(size=3):
+    def get_cube(size=3, origin=[0, 0, 0]):
         # cube corner points
         s = size
-        p1 = (0, 0, 0)
-        p2 = (0, 0, s)
-        p3 = (0, s, 0)
-        p4 = (0, s, s)
-        p5 = (s, 0, 0)
-        p6 = (s, 0, s)
-        p7 = (s, s, 0)
-        p8 = (s, s, s)
+        p1 = python_list_add(origin, (0, 0, 0))
+        p2 = python_list_add(origin, (0, 0, s))
+        p3 = python_list_add(origin, (0, s, 0))
+        p4 = python_list_add(origin, (0, s, s))
+        p5 = python_list_add(origin, (s, 0, 0))
+        p6 = python_list_add(origin, (s, 0, s))
+        p7 = python_list_add(origin, (s, s, 0))
+        p8 = python_list_add(origin, (s, s, s))
+
+        print(p1)
 
         # define the 6 cube faces
         # faces just lists of 3 or 4 vertices
@@ -39,10 +55,20 @@ def make_cubeGroup():
             [p2, p6, p8, p4],
         ]
 
+    IN_FILE = 'dipole_180520.res'  # from [volfil_tetrahedron_180519.py] v0.2
     OUT_FILE = 'cubeGroup_180520_t0950.stl'
-    with open(OUT_FILE, 'wb') as fp:
-        writer = STLWR.Binary_STL_Writer(fp)
-        writer.add_faces(get_cube())
+    DIPOLE_SIZE = 5
+
+    with open(IN_FILE, 'rb') as rfp:
+        dipoles = np.genfromtxt(IN_FILE)
+
+    with open(OUT_FILE, 'wb') as wfp:
+        writer = STLWR.Binary_STL_Writer(wfp)
+
+        for adipole in dipoles:
+            cube = get_cube(DIPOLE_SIZE, adipole)
+            writer.add_faces(cube)
+
         writer.close()
     print('OUT:', OUT_FILE)
 

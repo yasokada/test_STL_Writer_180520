@@ -48,10 +48,10 @@ def make_cubeGroup():
         #
         return [
             [p1, p3, p7, p5],  # bottom
-            [p1, p5, p6, p2],  
+            [p1, p5, p6, p2],
             [p5, p7, p8, p6],
-            [p7, p3, p4, p8],  # rear 
-            [p1, p2, p4, p3],  # left            
+            [p7, p3, p4, p8],  # rear
+            [p1, p2, p4, p3],  # left
             [p2, p6, p8, p4],
         ]
 

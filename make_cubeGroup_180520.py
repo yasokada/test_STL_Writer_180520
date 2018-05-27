@@ -11,6 +11,9 @@ import STLWriter as STLWR
 #
 
 '''
+v0.2 May, 27, 2018
+  - change [DIPOLE_SIZE]
+  - change [OUT_FILE]
 v0.1 May, 20, 2018
   - read dipole positions from [IN_FILE]
   - add python_list_add()
@@ -55,9 +58,17 @@ def make_cubeGroup():
             [p2, p6, p8, p4],
         ]
 
-    IN_FILE = 'dipole_180520.res'  # from [volfil_tetrahedron_180519.py] v0.2
-    OUT_FILE = 'cubeGroup_180520_t0950.stl'
-    DIPOLE_SIZE = 5
+    # 1. Regular Tetrahedra
+    # IN_FILE = 'dipole_180520.res'  # from [volfil_tetrahedron_180519.py] v0.2
+    # OUT_FILE = 'cubeGroup_180520_t0950.stl'
+    # DIPOLE_SIZE = 5
+
+    # 2. VTK from Gaussian Sphere code
+    IN_FILE = 'dipole_180526.res'  # from [volfil_vtkShape_180526.py] v0.1
+    # OUT_FILE = 'cubeGroup_180526_t1040.stl'
+    # OUT_FILE = 'cubeGroup_180527_t0805.stl'
+    OUT_FILE = 'cubeGroup_180527_t1052.stl'
+    DIPOLE_SIZE = 0.05
 
     with open(IN_FILE, 'rb') as rfp:
         dipoles = np.genfromtxt(IN_FILE)
